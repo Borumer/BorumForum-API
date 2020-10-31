@@ -1,0 +1,17 @@
+{
+    "name": "vendor-name/borum-jot-api",
+    "description": "The REST API for the app Borum Jot",
+    "autoload": {
+        "psr-4": {
+            "BorumForum\\DBHandlers\\": "api/include/DBHandlers",
+            "Api\\": "api",
+            "BorumForum\\": "api/include"
+        }
+    },
+    "require-dev": {
+    },
+    "require": {
+        "phpunit/phpunit": "^9.4",
+        "guzzlehttp/guzzle": "^6.1"
+    }
+}
