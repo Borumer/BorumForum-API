@@ -4,9 +4,7 @@
     "version": "0.0.1",
     "autoload": {
         "psr-4": {
-            "BorumForum\\DBHandlers\\": "api/include/DBHandlers",
-            "Api\\": "api",
-            "BorumForum\\": "api/include"
+            "BorumForum\\DBHandlers\\": "api/include/DBHandlers"
         }
     },
     "minimum-stability": "dev",
