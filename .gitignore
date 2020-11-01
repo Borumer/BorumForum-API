@@ -1,4 +1,4 @@
 .env
 vendor/
 package-lock.json
-composer.lock
+#composer.lock
