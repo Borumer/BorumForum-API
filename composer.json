@@ -1,6 +1,6 @@
 {
     "name": "varuns/borum-forum-api",
-    "description": "The REST API for the app Borum Jot",
+    "description": "The REST API for Borum and Borum Forum",
     "version": "0.0.1",
     "autoload": {
         "psr-4": {
@@ -11,8 +11,6 @@
     "require-dev": {
     },
     "require": {
-        "phpunit/phpunit": "^9.4",
-        "guzzlehttp/guzzle": "^6.1",
         "varuns/borum-sleep": "dev-main"
     },
     "scripts": {
