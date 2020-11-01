@@ -8,7 +8,13 @@ class UserHandler extends UserKnownHandler {
         parent::__construct($userApiKey);    
     }
 
-    function createNewUser($email, $password) {
+    public function createNewUser() {
+        return [
+            "statusCode" => 200
+        ];
+    }
+
+    public function getUser($email, $password) {
         return [
             "statusCode" => 200
         ];
@@ -17,7 +23,7 @@ class UserHandler extends UserKnownHandler {
     /**
      * @param string $newPassword The new password
      */
-    function updateSignIn($newPassword) {
+    public function updateSignIn($newPassword) {
         $sanitizedNewPassword = mysqli_real_escape_string($this->conn, trim($newPassword));
         $this->executeQuery("
         UPDATE users SET password = SHA2('$sanitizedNewPassword', 512) 

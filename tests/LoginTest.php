@@ -9,8 +9,8 @@ class LoginTest extends TestCase {
         $this->http = new GuzzleHttp\Client(["base_uri" => "https://api.bforborum.com/api/"]);
     }
 
-    public function testPost() {
-        $response = $this->http->post('login');
+    public function testGet() {
+        $response = $this->http->get('login');
 
         $this->assertEquals(200, $response->getStatusCode());
 
@@ -28,7 +28,7 @@ class LoginTest extends TestCase {
     }
 
     public function testInvalidRequestMethod() {
-        $response = $this->http->get('GET', 'user-agent');
+        $response = $this->http->get('POST', 'user-agent');
 
         $this->assertEquals(405, $response->getStatusCode());
 
