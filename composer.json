@@ -1,5 +1,5 @@
 {
-    "name": "vendor-name/borum-jot-api",
+    "name": "varuns/borum-forum-api",
     "description": "The REST API for the app Borum Jot",
     "version": "0.0.1",
     "autoload": {

@@ -6,22 +6,22 @@ use BorumForum\DBHandlers\UserHandler;
 use VarunS\BorumSleep\Helpers;
 use VarunS\BorumSleep\SimpleRest;
 
-$headers = apache_request_headers();
-SimpleRest::handleHeaderValidation($headers, "authorization");
-$userApiKey = Helpers::parseAuthorizationHeader($headers["authorization"]);
-
-$userHandler = new UserHandler($userApiKey);
+header('Access-Control-Allow-Methods: POST');
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "POST":
-        $response = $userHandler->createNewUser($_POST["email"], $_POST["password"]);
+        $response = $userHandler->getUser($_POST["email"], $_POST["password"]);
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
     break;
     case "PUT":
-        $_PUT=[];
-        parse_str(file_get_contents('php://input'), $_PUT);
-        $response = $userHandler->updateSignIn($_PUT["new_password"]);
+        $headers = apache_request_headers();
+        SimpleRest::handleHeaderValidation($headers, "authorization");
+        $userApiKey = Helpers::parseAuthorizationHeader($headers["authorization"]);
+
+        $userHandler = new UserHandler($userApiKey);
+        parse_str(file_get_contents('php://input'), $GLOBALS["_{PUT}"]);
+        $response = $userHandler->updateSignIn($GLOBALS["_{PUT}"]["new_password"]);
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
     break;
