@@ -6,7 +6,7 @@ use BorumForum\DBHandlers\UserHandler;
 use VarunS\BorumSleep\Helpers;
 use VarunS\BorumSleep\SimpleRest;
 
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST, PUT');
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "POST":
