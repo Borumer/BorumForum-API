@@ -1,23 +1,12 @@
 <?php 
 
 namespace BorumForum\DBHandlers;
+
 use VarunS\BorumSleep\DBHandlers\UserKnownHandler;
 
-class UserHandler extends UserKnownHandler {
+class SettingsHandler extends UserKnownHandler {
     function __construct($userApiKey) {
         parent::__construct($userApiKey, $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"], $_ENV["DB_HOST"], $_ENV["DB_NAME"]);    
-    }
-
-    public function createNewUser() {
-        return [
-            "statusCode" => 200
-        ];
-    }
-
-    public function getUser($email, $password) {
-        return [
-            "statusCode" => 200
-        ];
     }
 
     /**
@@ -33,6 +22,28 @@ class UserHandler extends UserKnownHandler {
         LIMIT 1
         ");
 
+        return [
+            "statusCode" => 200
+        ];
+    }
+
+    public function toggleDarkMode($newValue) {
+
+    }
+}
+
+class UserHandler extends UserNotKnownHandler {
+    function __construct() {
+        parent::__construct();
+    }
+
+    public function createNewUser() {
+        return [
+            "statusCode" => 200
+        ];
+    }
+
+    public function getUser($email, $password) {
         return [
             "statusCode" => 200
         ];
