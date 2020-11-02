@@ -5,7 +5,7 @@ use VarunS\BorumSleep\DBHandlers\UserKnownHandler;
 
 class UserHandler extends UserKnownHandler {
     function __construct($userApiKey) {
-        parent::__construct($userApiKey);    
+        parent::__construct($userApiKey, $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"], $_ENV["DB_HOST"], $_ENV["DB_NAME"]);    
     }
 
     public function createNewUser() {
@@ -21,7 +21,9 @@ class UserHandler extends UserKnownHandler {
     }
 
     /**
+     * Updates a user's sign in
      * @param string $newPassword The new password
+     * @return Array statusCode 200 if everything ran without error, 500 otherwise
      */
     public function updateSignIn($newPassword) {
         $sanitizedNewPassword = mysqli_real_escape_string($this->conn, trim($newPassword));
