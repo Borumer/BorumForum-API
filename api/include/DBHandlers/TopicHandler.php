@@ -2,9 +2,13 @@
 
 namespace BorumForum\DBHandlers;
 
-class TopicHandler extends UserKnownHandler implements Deleteable {
+class TopicHandler extends UserKnownHandler implements PerpetuallyTemporary {
     public function __construct($userApiKey) {
         parent::__construct($userApiKey);
+    }
+
+    public function create($data) {
+        
     }
 
     /**
