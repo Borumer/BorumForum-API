@@ -2,11 +2,9 @@
 
 namespace BorumForum\DBHandlers;
 
-use VarunS\BorumSleep\DBHandlers\UserKnownHandler;
-
 class SettingsHandler extends UserKnownHandler {
     function __construct($userApiKey) {
-        parent::__construct($userApiKey, $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"], $_ENV["DB_HOST"], $_ENV["DB_NAME"]);    
+        parent::__construct($userApiKey);    
     }
 
     /**
@@ -17,9 +15,8 @@ class SettingsHandler extends UserKnownHandler {
     public function updateSignIn($newPassword) {
         $sanitizedNewPassword = mysqli_real_escape_string($this->conn, trim($newPassword));
         $this->executeQuery("
-        UPDATE users SET password = SHA2('$sanitizedNewPassword', 512) 
-        WHERE id = " . $this->userId . "  
-        LIMIT 1
+        UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
+        WHERE id = " . $this->userId . " LIMIT 1
         ");
 
         return [
