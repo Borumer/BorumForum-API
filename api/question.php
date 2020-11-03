@@ -5,7 +5,7 @@ require __DIR__ . "/../vendor/autoload.php";
 use BorumForum\DBHandlers\QuestionHandler;
 use VarunS\BorumSleep\SimpleRest;
 
-header('Access-Control-Allow-Methods: POST, PUT, DELETE');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
 $headers = apache_request_headers();
 SimpleRest::handleHeaderValidation($headers, "authorization");
