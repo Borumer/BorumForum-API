@@ -8,6 +8,7 @@ use VarunS\BorumSleep\SimpleRest;
 header('Access-Control-Allow-Methods: POST, PUT, DELETE');
 
 $headers = apache_request_headers();
+SimpleRest::handleHeaderValidation($headers, "authorization");
 $userApiKey = SimpleRest::parseAuthorizationHeader($headers["authorization"]);
 $handler = new QuestionHandler($userApiKey);
 
