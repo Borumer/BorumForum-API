@@ -2,11 +2,13 @@
 
 namespace BorumForum\DBHandlers;
 
-use VarunS\BorumSleep\DBHandlers\DBHandler;
-
-class CommentHandler extends DBHandler implements Deleteable {
+class CommentHandler extends UserKnownHandler implements PerpetuallyTemporary {
     function __construct($userApiKey) {
         parent::__construct($userApiKey);
+    }
+
+    public function create($data) {
+
     }
 
     public function delete($id) {
@@ -33,10 +35,6 @@ class CommentHandler extends DBHandler implements Deleteable {
                 ]
             ];
         }
-    }
-
-    public function insert($body) {
-
     }
 
     public function edit($id, $newBody) {
