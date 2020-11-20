@@ -1,7 +1,8 @@
 {
     "name": "varuns/borum-forum-api",
     "description": "The REST API for Borum and Borum Forum",
-    "version": "0.0.1",
+    "version": "0.1.0-alpha",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "BorumForum\\DBHandlers\\": "api/include/DBHandlers"
@@ -9,6 +10,8 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
+        "phpunit/phpunit": "^9.4",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "require": {
         "varuns/borum-sleep": "dev-main"

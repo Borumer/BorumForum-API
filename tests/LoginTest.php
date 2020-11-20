@@ -28,7 +28,7 @@ class LoginTest extends TestCase {
     }
 
     public function testInvalidRequestMethod() {
-        $response = $this->http->get('POST', 'user-agent');
+        $response = $this->http->post('user-agent');
 
         $this->assertEquals(405, $response->getStatusCode());
 
