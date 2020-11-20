@@ -73,7 +73,7 @@ class UserHandler extends UserNotKnownHandler {
         $sanitizedEmail = $this->sanitizeParam($email);
         $sanitizedPassword = $this->sanitizeParam($password);
 
-        $userData = $this->executeQuery("SELECT id, api_key, email, first_name, last_name, username FROM users WHERE email = '$sanitizedEmail' AND password = SHA2('$sanitizedPassword', 512) LIMIT 1");
+        $userData = $this->executeQuery("SELECT id, api_key, email, first_name, last_name, username FROM users WHERE email = '$sanitizedEmail' AND pass = SHA2('$sanitizedPassword', 512) LIMIT 1");
         
         if (mysqli_num_rows($userData) == 1) {
             $userData = mysqli_fetch_array($userData, MYSQLI_ASSOC);
