@@ -1,7 +1,7 @@
 {
     "name": "varuns/borum-forum-api",
     "description": "The REST API for Borum and Borum Forum",
-    "version": "0.1.0-alpha",
+    "version": "0.1.1-alpha",
     "type": "library",
     "autoload": {
         "psr-4": {
