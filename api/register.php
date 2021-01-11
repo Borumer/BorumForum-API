@@ -5,7 +5,7 @@ require __DIR__ . "/../vendor/autoload.php";
 use BorumForum\DBHandlers\UserHandler;
 use VarunS\BorumSleep\SimpleRest;
 
-header('Access-Control-Allow-Methods: POST, PUT');
+header('Access-Control-Allow-Methods: POST, PUT, OPTIONS');
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "POST":
