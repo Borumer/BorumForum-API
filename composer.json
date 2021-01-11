@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^6.1"
     },
     "require": {
-        "varuns/borum-sleep": "dev-main"
+        "varuns/borum-sleep": "^0.1.1"
     },
     "scripts": {
         "test": "phpunit tests"
