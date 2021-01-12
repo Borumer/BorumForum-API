@@ -39,7 +39,7 @@ class UserHandler extends UserNotKnownHandler {
 
         $registrationQuery = "
         INSERT INTO users 
-        (first_name, last_name, email, password, api_key, registration_date) 
+        (first_name, last_name, email, pass, api_key, registration_date) 
         VALUES ('$firstName', '$lastName', '$email', SHA2('$password', 512), '$apiKey', NOW())";
         
         $this->executeQuery($registrationQuery);
