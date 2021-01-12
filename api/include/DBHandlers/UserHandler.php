@@ -37,11 +37,12 @@ class UserHandler extends UserNotKnownHandler {
             $apiKey = $this->generateApiKey();
         }
 
-        $this->executeQuery("
-            INSERT INTO users 
-            (first_name, last_name, email, password, api_key, registration_date) 
-            VALUES ('$firstName', '$lastName', '$email', SHA2('$password', 512), $apiKey, NOW())"
-        );
+        $registrationQuery = "
+        INSERT INTO users 
+        (first_name, last_name, email, password, api_key, registration_date) 
+        VALUES ('$firstName', '$lastName', '$email', SHA2('$password', 512), $apiKey, NOW())";
+        
+        $this->executeQuery($registrationQuery);
 
         if (mysqli_affected_rows($this->conn) == 1) {
             return [
@@ -57,7 +58,8 @@ class UserHandler extends UserNotKnownHandler {
             return [
                 "statusCode" => 500,
                 "error" => [
-                    "message" => "A server error occurred"
+                    "message" => "A server error occurred",
+                    "query" => $registrationQuery
                 ]
             ];
         }
@@ -96,5 +98,3 @@ class UserHandler extends UserNotKnownHandler {
         return mysqli_real_escape_string($this->conn, trim($param));
     }
 }
-
-?>
