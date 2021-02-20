@@ -6,7 +6,7 @@ use BorumForum\DBHandlers\SettingsHandler;
 use BorumForum\DBHandlers\UserHandler;
 use VarunS\BorumSleep\SimpleRest;
 
-header('Access-Control-Allow-Methods: POST, PUT');
+header('Access-Control-Allow-Methods: POST, PUT, OPTIONS');
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "POST":
@@ -25,6 +25,8 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $response = $settingsHandler->updateSignIn($GLOBALS["_{PUT}"]["new_password"]);
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
+    break;
+    case "OPTIONS":
     break;
     default:
         SimpleRest::setHttpHeaders(405);
