@@ -7,6 +7,7 @@ use BorumForum\DBHandlers\UserHandler;
 use VarunS\BorumSleep\SimpleRest;
 
 header('Access-Control-Allow-Methods: POST, PUT, OPTIONS');
+header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "POST":
