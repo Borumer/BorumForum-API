@@ -15,6 +15,11 @@ class UserHandler extends UserNotKnownHandler {
      * @param string $unsafePassword The plaintext password of the new user
      */
     public function createNewUser($unsafeFirstName, $unsafeLastName, $unsafeEmail, $unsafePassword) {
+        $registrationQuery = "
+        INSERT INTO users 
+        (first_name, last_name, email, pass, api_key, registration_date) 
+        VALUES ('?', '?', '?', SHA2('?', 512), '?', NOW())";
+
         $firstName = $this->sanitizeParam($unsafeFirstName);
         $lastName = $this->sanitizeParam($unsafeLastName);
         $email = $this->sanitizeParam($unsafeEmail);
@@ -36,33 +41,25 @@ class UserHandler extends UserNotKnownHandler {
         if ($this->userExists($apiKey)) {
             $apiKey = $this->generateApiKey();
         }
-
-        $registrationQuery = "
-        INSERT INTO users 
-        (first_name, last_name, email, pass, api_key, registration_date) 
-        VALUES ('$firstName', '$lastName', '$email', SHA2('$password', 512), '$apiKey', NOW())";
         
-        $this->executeQuery($registrationQuery);
+        $registration_preparation = $this->conn->prepare($registrationQuery);
+        $registration_preparation->bind_param("sssss", $firstName, $lastName, $email, $password, $apiKey);
+        $registration_preparation->execute();
 
         if (mysqli_affected_rows($this->conn) == 1) {
-            return [
-                "statusCode" => 200,
-                "data" => [
-                    "first_name" => $firstName,
-                    "last_name" => $lastName,
-                    "email" => $email,
-                    "api_key" => $apiKey
-                ]
-            ];
-        } else {
-            return [
-                "statusCode" => 500,
-                "error" => [
-                    "message" => "A server error occurred",
-                    "query" => $registrationQuery
-                ]
-            ];
+            $response = $this->getUser($unsafeEmail, $unsafePassword);
+            if ($response["statusCode"] != 401) {
+                return $response;
+            }
         }
+        
+        return [
+            "statusCode" => 500,
+            "error" => [
+                "message" => "A server error occurred",
+                "query" => $registrationQuery
+            ]
+        ];
     }
 
     /**
