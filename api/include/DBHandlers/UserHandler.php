@@ -18,7 +18,7 @@ class UserHandler extends UserNotKnownHandler {
         $registrationQuery = "
         INSERT INTO users 
         (first_name, last_name, email, pass, api_key, registration_date) 
-        VALUES ('?', '?', '?', SHA2('?', 512), '?', NOW())";
+        VALUES (?, ?, ?, SHA2(?, 512), ?, NOW())";
 
         $firstName = $this->sanitizeParam($unsafeFirstName);
         $lastName = $this->sanitizeParam($unsafeLastName);
