@@ -48,6 +48,9 @@ class UserHandler extends UserNotKnownHandler {
 
         if (mysqli_affected_rows($this->conn) == 1) {
             $response = $this->getUser($unsafeEmail, $unsafePassword);
+            
+            $registration_preparation->close();
+
             if ($response["statusCode"] != 401) {
                 return $response;
             }
