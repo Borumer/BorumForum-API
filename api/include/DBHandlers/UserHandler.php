@@ -18,7 +18,7 @@ class UserHandler extends UserNotKnownHandler {
         $registrationQuery = "
         INSERT INTO users 
         (first_name, last_name, email, pass, api_key, registration_date) 
-        VALUES ('?', '?', '?', SHA2('?', 512), '?', NOW())";
+        VALUES (?, ?, ?, SHA2(?, 512), ?, NOW())";
 
         $firstName = $this->sanitizeParam($unsafeFirstName);
         $lastName = $this->sanitizeParam($unsafeLastName);
@@ -48,6 +48,9 @@ class UserHandler extends UserNotKnownHandler {
 
         if (mysqli_affected_rows($this->conn) == 1) {
             $response = $this->getUser($unsafeEmail, $unsafePassword);
+            
+            $registration_preparation->close();
+
             if ($response["statusCode"] != 401) {
                 return $response;
             }
