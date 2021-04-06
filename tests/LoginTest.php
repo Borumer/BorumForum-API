@@ -6,7 +6,7 @@ class LoginTest extends TestCase {
     private $http;
 
     public function setUp() : void {
-        $this->http = new GuzzleHttp\Client(["base_uri" => "https://api.bforborum.com/api/"]);
+        $this->http = new GuzzleHttp\Client(["base_uri" => "https://api.borumtech.com/api/"]);
     }
 
     public function testPost() {
