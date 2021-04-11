@@ -77,6 +77,15 @@ class UserHandler extends UserNotKnownHandler {
 
         $userData = $this->executeQuery("SELECT id, api_key, email, first_name, last_name, username FROM users WHERE email = '$sanitizedEmail' AND pass = SHA2('$sanitizedPassword', 512) LIMIT 1");
         
+        if (!!!$userData || !$userData instanceof \mysqli_result) {
+            return [
+                "statusCode" => 500,
+                "error" => [
+                    "message" => "A server error occurred"
+                ]
+            ];
+        }
+
         if (mysqli_num_rows($userData) == 1) {
             $userData = mysqli_fetch_array($userData, MYSQLI_ASSOC);
         

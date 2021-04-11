@@ -3,7 +3,7 @@
 require __DIR__ . "/../vendor/autoload.php";
 
 use BorumForum\DBHandlers\QuestionHandler;
-use VarunS\BorumSleep\SimpleRest;
+use VarunS\PHPSleep\SimpleRest;
 
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
