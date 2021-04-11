@@ -4,7 +4,7 @@ require __DIR__ . "/../vendor/autoload.php";
 
 use BorumForum\DBHandlers\SettingsHandler;
 use BorumForum\DBHandlers\UserHandler;
-use VarunS\BorumSleep\SimpleRest;
+use VarunS\PHPSleep\SimpleRest;
 
 header('Access-Control-Allow-Methods: POST, PUT, OPTIONS');
 header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
