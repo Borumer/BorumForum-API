@@ -2,30 +2,51 @@
 
 namespace BorumForum\DBHandlers;
 
-class SettingsHandler extends UserKnownHandler {
+class SettingsHandler {
+
+    private UserKnownHandler $dbChecker;
+
     function __construct($userApiKey) {
-        parent::__construct($userApiKey);    
+        $this->dbChecker = new UserKnownHandler($userApiKey);    
     }
 
     /**
      * Updates a user's sign in
      * @param string $newPassword The new password
-     * @return Array statusCode 200 if everything ran without error, 500 otherwise
+     * @return Array Output with statusCode 201 if everything ran without error, 500 otherwise
      */
     public function updateSignIn($newPassword) {
+
         $sanitizedNewPassword = mysqli_real_escape_string($this->conn, trim($newPassword));
-        $this->executeQuery("
+        $this->dbChecker->executeQuery("
         UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
         WHERE id = " . $this->userId . " LIMIT 1
         ");
+        
+        if ($this->dbChecker->lastQueryWasSuccessful()) {
+            return [
+                "statusCode" => 201
+            ];
+        } else if ($this->dbChecker->lastQueryAffectedNoRows()) {
+            return [
+                "statusCode" => 400,
+                "error" => [
+                    "message" => "That password is the same as the old password"
+                ]
+            ];
+        } else {
+            return [
+                "statusCode" => 500,
+                "error" => [
+                    "message" => "A system error occurred"
+                ]
+            ];
+        }
 
-        return [
-            "statusCode" => 200
-        ];
     }
 
     public function toggleDarkMode($newValue) {
-
+        
     }
 }
 
