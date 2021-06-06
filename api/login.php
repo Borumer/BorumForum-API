@@ -34,10 +34,10 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $settingsHandler = new SettingsHandler($userApiKey);
         parse_str(file_get_contents('php://input'), $put);
 
-        if (isset($put["old_password"])) {
+        if (isset($put["old_password"]) && isset($put["new_password"])) {
             $response = $settingsHandler->changePasswordWithOldPassword($GLOBALS["_{PUT}"]["old_password"], $GLOBALS["_{PUT}"]["new_password"]);
-        } else if (isset($put["code"]) && isset($put["key"])) {
-            $response = $settingsHandler->changePasswordWithCode()
+        } else if (isset($put["code"]) && isset($put["email"]) && isset($put["new_password"])) {
+            $response = $settingsHandler->changePasswordWithCode($put["new_password"], $put["code"], $put["email"]);
         }
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
