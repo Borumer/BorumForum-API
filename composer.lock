@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "varuns/php-sleep",
-            "version": "v1.4.0-alpha",
+            "version": "v1.5.0-alpha",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Borumer/php-sleep.git",
-                "reference": "30c25dcac96c2c9c1969b486125cd0b414b8ae36"
+                "url": "https://github.com/varunsingh87/php-sleep.git",
+                "reference": "953b10fb734c1adb199c2335a9ca30ec015970e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Borumer/php-sleep/zipball/30c25dcac96c2c9c1969b486125cd0b414b8ae36",
-                "reference": "30c25dcac96c2c9c1969b486125cd0b414b8ae36",
+                "url": "https://api.github.com/repos/varunsingh87/php-sleep/zipball/953b10fb734c1adb199c2335a9ca30ec015970e3",
+                "reference": "953b10fb734c1adb199c2335a9ca30ec015970e3",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,10 +42,10 @@
             ],
             "description": "An object-oriented PHP library for a simple REST service",
             "support": {
-                "issues": "https://github.com/Borumer/php-sleep/issues",
-                "source": "https://github.com/Borumer/php-sleep/tree/v1.4.0-alpha"
+                "issues": "https://github.com/varunsingh87/php-sleep/issues",
+                "source": "https://github.com/varunsingh87/php-sleep/tree/v1.5.0-alpha"
             },
-            "time": "2021-05-04T01:51:28+00:00"
+            "time": "2021-06-06T03:12:43+00:00"
         }
     ],
     "packages-dev": [

@@ -17,8 +17,8 @@ class SettingsHandler {
      * @return Array Output with statusCode 201 if everything ran without error, 500 otherwise
      */
     public function updateSignIn($oldPassword, $newPassword) {
-        $sanitizedOldPassword = mysqli_real_escape_string($this->conn, trim($oldPassword));
-        $sanitizedNewPassword = mysqli_real_escape_string($this->conn, trim($newPassword));
+        $sanitizedOldPassword = $this->dbChecker->sanitizeParam($oldPassword);
+        $sanitizedNewPassword = $this->dbChecker->sanitizeParam($newPassword);
 
         $comparePasswords = $this->dbChecker->executeQuery("SELECT SHA2('$sanitizedOldPassword', 512), pass FROM users WHERE id = " . $this->dbChecker->userId);
 
