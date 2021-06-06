@@ -12,36 +12,47 @@ class SettingsHandler {
 
     /**
      * Updates a user's sign in
+     * @param string $oldPassword The old password
      * @param string $newPassword The new password
      * @return Array Output with statusCode 201 if everything ran without error, 500 otherwise
      */
-    public function updateSignIn($newPassword) {
-
+    public function updateSignIn($oldPassword, $newPassword) {
+        $sanitizedOldPassword = mysqli_real_escape_string($this->conn, trim($oldPassword));
         $sanitizedNewPassword = mysqli_real_escape_string($this->conn, trim($newPassword));
-        $this->dbChecker->executeQuery("
-        UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
-        WHERE id = " . $this->userId . " LIMIT 1
-        ");
-        
-        if ($this->dbChecker->lastQueryWasSuccessful()) {
-            return [
-                "statusCode" => 201
-            ];
-        } else if ($this->dbChecker->lastQueryAffectedNoRows()) {
-            return [
-                "statusCode" => 400,
-                "error" => [
-                    "message" => "That password is the same as the old password"
-                ]
-            ];
-        } else {
-            return [
-                "statusCode" => 500,
-                "error" => [
-                    "message" => "A system error occurred"
-                ]
-            ];
+
+        $comparePasswords = $this->dbChecker->executeQuery("SELECT SHA2('$sanitizedOldPassword', 512), pass FROM users WHERE id = " . $this->dbChecker->userId);
+
+        $comparePasswords = mysqli_fetch_array($comparePasswords);
+        $oldPasswordIsCorrect = $comparePasswords[0] == $comparePasswords[1];
+
+        if ($oldPasswordIsCorrect) {
+            $this->dbChecker->executeQuery("
+            UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
+            WHERE id = " . $this->userId . " LIMIT 1
+            ");
+
+            if ($this->dbChecker->lastQueryWasSuccessful()) {
+                return [
+                    "statusCode" => 201
+                ];
+            } else if ($this->dbChecker->lastQueryAffectedNoRows()) {
+                return [
+                    "statusCode" => 400,
+                    "error" => [
+                        "message" => "That password is the same as the old password"
+                    ]
+                ];
+            } else {
+                return [
+                    "statusCode" => 500,
+                    "error" => [
+                        "message" => "A system error occurred"
+                    ]
+                ];
+            }
         }
+        
+        
 
     }
 

@@ -24,7 +24,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
         $settingsHandler = new SettingsHandler($userApiKey);
         parse_str(file_get_contents('php://input'), $GLOBALS["_{PUT}"]);
-        $response = $settingsHandler->updateSignIn($GLOBALS["_{PUT}"]["new_password"]);
+        $response = $settingsHandler->updateSignIn($GLOBALS["_{PUT}"]["old_password"], $GLOBALS["_{PUT}"]["new_password"]);
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
     break;
