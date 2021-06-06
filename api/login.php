@@ -6,7 +6,7 @@ use BorumForum\DBHandlers\SettingsHandler;
 use BorumForum\DBHandlers\UserHandler;
 use VarunS\PHPSleep\SimpleRest;
 
-header('Access-Control-Allow-Methods: POST, PUT, OPTIONS');
+header('Access-Control-Allow-Methods: POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
 header('Access-Control-Allow-Headers: content-type, authorization');
 
@@ -28,6 +28,15 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
     break;
+    case "DELETE":
+        $delete = [];
+        parse_str(file_get_contents('php://input'), $delete);
+
+        $userHandler = new UserHandler();
+        $response = $userHandler->sendResetPasswordEmail($delete["email"]);
+
+        SimpleRest::setHttpHeaders($response["statusCode"]);
+        echo json_encode($response);
     case "OPTIONS":
     break;
     default:
