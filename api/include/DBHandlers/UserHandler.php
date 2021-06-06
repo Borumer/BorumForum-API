@@ -628,17 +628,17 @@ class UserHandler extends UserNotKnownHandler
         </body>
       </html>`, $email);
 
-        return [
-          "statusCode" => 202
-        ];
-      } catch (\Throwable $e) {
-        return [
-          "statusCode" => 500,
-          "error" => [
-            "message" => "A server error occurred"
-          ]
-        ];
-      }
+      return [
+        "statusCode" => 202
+      ];
+    } catch (\Throwable $e) {
+      return [
+        "statusCode" => 500,
+        "error" => [
+          "message" => "A server error occurred"
+        ]
+      ];
+    }
   }
 
 
@@ -648,31 +648,34 @@ class UserHandler extends UserNotKnownHandler
    * @param string $email The recipient of the email
    * @return bool Whether the email was successfully sent
    */
-  function sendEmail($subject, $body, $email = 'admin@borumtech.com') : bool {  
+  function sendEmail($subject, $body, $email = 'admin@borumtech.com'): bool
+  {
     // Instantiation and passing `true` enables exceptions
     $mail = new PHPMailer(true);
-  
-    try {
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host = 'localhost';
-        $mail->SMTPAuth = false;
-        $mail->SMTPAutoTLS = false; 
-        $mail->Port = 25; 
 
-        // Recipients
-        $mail->setFrom('admin@borumtech.com', 'The Borum Team');
-        $mail->addAddress($email);     // Add a recipient
-  
-        // Content
-        $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->Subject = $subject;
-        $mail->Body    = $body;
-        $mail->AltBody = strip_tags($body);
-        $mail->send();
-        return true;
+    try {
+      // Server settings
+      $mail->isSMTP();
+      $mail->Host = $_ENV["SMTP_HOST"];    // Must be GoDaddy host name
+      $mail->SMTPAuth = true;
+      $mail->Username = 'support@borumtech.com';
+      $mail->Password = $_ENV["SUPPORT_EMAIL_PASSWORD"];
+      $mail->SMTPSecure = 'tls';   // ssl will no longer work on GoDaddy CPanel SMTP
+      $mail->Port = 587;    // Must use port 587 with TLS
+
+      // Recipients
+      $mail->setFrom('support@borumtech.com', 'Borum Support');
+      $mail->addAddress($email);     // Add a recipient
+
+      // Content
+      $mail->isHTML(true);                                  // Set email format to HTML
+      $mail->Subject = $subject;
+      $mail->Body    = $body;
+      $mail->AltBody = strip_tags($body);
+      $mail->send();
+      return true;
     } catch (\Exception $e) {
-        return false;
+      return false;
     }
   }
 }

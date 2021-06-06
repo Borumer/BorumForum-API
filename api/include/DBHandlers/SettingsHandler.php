@@ -1,13 +1,15 @@
-<?php 
+<?php
 
 namespace BorumForum\DBHandlers;
 
-class SettingsHandler {
+class SettingsHandler
+{
 
     private UserKnownHandler $dbChecker;
 
-    function __construct($userApiKey) {
-        $this->dbChecker = new UserKnownHandler($userApiKey);    
+    function __construct($userApiKey)
+    {
+        $this->dbChecker = new UserKnownHandler($userApiKey);
     }
 
     /**
@@ -16,7 +18,8 @@ class SettingsHandler {
      * @param string $newPassword The new password
      * @return Array Output with statusCode 201 if everything ran without error, 500 otherwise
      */
-    public function updateSignIn($oldPassword, $newPassword) {
+    public function updateSignIn($oldPassword, $newPassword)
+    {
         $sanitizedOldPassword = $this->dbChecker->sanitizeParam($oldPassword);
         $sanitizedNewPassword = $this->dbChecker->sanitizeParam($newPassword);
 
@@ -62,7 +65,21 @@ class SettingsHandler {
         }
     }
 
-    public function toggleDarkMode($newValue) {
-        
+
+    public function deleteAccount()
+    {
+        $this->dbChecker->beginTransaction();
+
+        // Remove Borum Jot data
+        $this->dbChecker->executeQuery("DELETE FROM Jottings.users WHERE user_id = " . $this->dbChecker->userId);
+        $this->dbChecker->executeQuery("DELETE FROM Jottings.notes WHERE user_id = " . $this->dbChecker->userId);
+        $this->dbChecker->executeQuery("DELETE FROM Jottings.tasks WHERE user_id = " . $this->dbChecker->userId);
+
+        // Remove Borum account data
+        $this->dbChecker->executeQuery("DELETE FROM firstborumdatabase.users WHERE id = " . $this->dbChecker->userId);
+    }
+
+    public function toggleDarkMode($newValue)
+    {
     }
 }
