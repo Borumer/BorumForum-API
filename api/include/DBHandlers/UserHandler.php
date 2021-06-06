@@ -610,12 +610,12 @@ class UserHandler extends UserNotKnownHandler
                         <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td class="content-cell" align="center">
-                              <p class="f-fallback sub align-center">&copy; 2021 [Product Name]. All rights reserved.</p>
-                              <p class="f-fallback sub align-center">
-                                [Company Name, LLC]
+                              <p class="f-fallback sub align-center">&copy; 2021 Borum Sphere. All rights reserved.</p>
+                              <!-- <p class="f-fallback sub align-center">
+                                Borum Tech
                                 <br>1234 Street Rd.
-                                <br>Suite 1234
-                              </p>
+                                <br>Mountain View, California
+                              </p> -->
                             </td>
                           </tr>
                         </table>
@@ -640,7 +640,7 @@ class UserHandler extends UserNotKnownHandler
 
         //Server settings
         $mailer->SMTPDebug = 1;                      // Verbose debug output: 1 for no 2,3,4 for yes
-        $mailer->isMail();                                            // Send using SMTP
+        $mailer->isSMTP();                                            // Send using SMTP
         $mailer->Port = 25;                                    // TCP port to connect to
 
         //Recipients
