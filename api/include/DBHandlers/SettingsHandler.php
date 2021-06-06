@@ -50,10 +50,14 @@ class SettingsHandler {
                     ]
                 ];
             }
+        } else {
+            return [
+                "statusCode" => 403,
+                "error" => [
+                    "message" => "The current password is not correct. If you do not remember your current password, log out and click 'Forgot Password'"
+                ]
+            ];
         }
-        
-        
-
     }
 
     public function toggleDarkMode($newValue) {
