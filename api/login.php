@@ -32,8 +32,13 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $userApiKey = SimpleRest::parseAuthorizationHeader($headers["authorization"]);
 
         $settingsHandler = new SettingsHandler($userApiKey);
-        parse_str(file_get_contents('php://input'), $GLOBALS["_{PUT}"]);
-        $response = $settingsHandler->updateSignIn($GLOBALS["_{PUT}"]["old_password"], $GLOBALS["_{PUT}"]["new_password"]);
+        parse_str(file_get_contents('php://input'), $put);
+
+        if (isset($put["old_password"])) {
+            $response = $settingsHandler->changePasswordWithOldPassword($GLOBALS["_{PUT}"]["old_password"], $GLOBALS["_{PUT}"]["new_password"]);
+        } else if (isset($put["code"]) && isset($put["key"])) {
+            $response = $settingsHandler->changePasswordWithCode()
+        }
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
     break;

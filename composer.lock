@@ -462,16 +462,16 @@
         },
         {
             "name": "varuns/php-sleep",
-            "version": "v1.5.0-alpha",
+            "version": "v1.6.0-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/varunsingh87/php-sleep.git",
-                "reference": "953b10fb734c1adb199c2335a9ca30ec015970e3"
+                "reference": "74e5dede656d1456fd284746f2e4fd6edd7c954e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/varunsingh87/php-sleep/zipball/953b10fb734c1adb199c2335a9ca30ec015970e3",
-                "reference": "953b10fb734c1adb199c2335a9ca30ec015970e3",
+                "url": "https://api.github.com/repos/varunsingh87/php-sleep/zipball/74e5dede656d1456fd284746f2e4fd6edd7c954e",
+                "reference": "74e5dede656d1456fd284746f2e4fd6edd7c954e",
                 "shasum": ""
             },
             "require-dev": {
@@ -497,9 +497,9 @@
             "description": "An object-oriented PHP library for a simple REST service",
             "support": {
                 "issues": "https://github.com/varunsingh87/php-sleep/issues",
-                "source": "https://github.com/varunsingh87/php-sleep/tree/v1.5.0-alpha"
+                "source": "https://github.com/varunsingh87/php-sleep/tree/v1.6.0-alpha"
             },
-            "time": "2021-06-06T03:12:43+00:00"
+            "time": "2021-06-06T17:07:44+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -1657,12 +1657,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "03d34dda2c4f6757385b7a728dea8e7fd3964c5a"
+                "reference": "d2ef33c3bd34b94f1dce7c0663d6fda59b9c904c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/03d34dda2c4f6757385b7a728dea8e7fd3964c5a",
-                "reference": "03d34dda2c4f6757385b7a728dea8e7fd3964c5a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d2ef33c3bd34b94f1dce7c0663d6fda59b9c904c",
+                "reference": "d2ef33c3bd34b94f1dce7c0663d6fda59b9c904c",
                 "shasum": ""
             },
             "require": {
@@ -1752,7 +1752,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-05T11:44:55+00:00"
+            "time": "2021-06-06T08:18:52+00:00"
         },
         {
             "name": "psr/http-message",

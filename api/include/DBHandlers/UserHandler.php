@@ -120,7 +120,7 @@ class UserHandler extends UserNotKnownHandler
     $userData = mysqli_fetch_array($userQuery);
     $name = "{$userData[0]} {$userData[1]}";
 
-    $resetPasswordLink = "https://accounts.borumtech.com/change_password?key={$userData[2]}";
+    $resetPasswordLink = "https://accounts.borumtech.com/reset-password?key={$userData[2]}&email=$email";
     try {
       $this->sendEmail("Reset your Password", `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">

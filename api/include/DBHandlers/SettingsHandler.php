@@ -18,7 +18,7 @@ class SettingsHandler
      * @param string $newPassword The new password
      * @return Array Output with statusCode 201 if everything ran without error, 500 otherwise
      */
-    public function updateSignIn($oldPassword, $newPassword)
+    public function changePasswordWithOldPassword($oldPassword, $newPassword)
     {
         $sanitizedOldPassword = $this->dbChecker->sanitizeParam($oldPassword);
         $sanitizedNewPassword = $this->dbChecker->sanitizeParam($newPassword);
@@ -29,32 +29,7 @@ class SettingsHandler
         $oldPasswordIsCorrect = $comparePasswords[0] == $comparePasswords[1];
 
         if ($oldPasswordIsCorrect) {
-            $query = "
-            UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
-            WHERE id = " . $this->dbChecker->userId . " LIMIT 1
-            ";
-
-            $this->dbChecker->executeQuery($query);
-
-            if ($this->dbChecker->lastQueryWasSuccessful()) {
-                return [
-                    "statusCode" => 201
-                ];
-            } else if ($this->dbChecker->lastQueryAffectedNoRows()) {
-                return [
-                    "statusCode" => 400,
-                    "error" => [
-                        "message" => "That password is the same as the old password"
-                    ]
-                ];
-            } else {
-                return [
-                    "statusCode" => 500,
-                    "error" => [
-                        "message" => "A system error occurred"
-                    ]
-                ];
-            }
+            $this->updateSignIn($sanitizedNewPassword);
         } else {
             return [
                 "statusCode" => 403,
@@ -65,6 +40,60 @@ class SettingsHandler
         }
     }
 
+    public function changePasswordWithCode($newPassword, $activationCode, $email) {
+        $sanitizedNewPassword = $this->dbChecker->sanitizeParam($newPassword);
+        
+        if ($email != $this->dbChecker->userArray["email"]) {
+            return [
+                "statusCode" => 401,
+                "error" => [
+                    "message" => "The email and key do not match"
+                ]
+            ];
+        }
+
+        $passwordReset = $this->dbChecker->executeQuery("SELECT * FROM `password-resets` WHERE code = \"$activationCode\" AND email = \"$email\" LIMIT 1");
+        $passwordResetSuccess = mysqli_num_rows($passwordReset) == 1;
+
+        if ($passwordResetSuccess)
+            return $this->updateSignIn($sanitizedNewPassword);        
+
+        return [
+            "statusCode" => 500,
+            "error" => [
+                "message" => "A server error occurred and the password could not be changed"
+            ]
+        ];
+    }
+
+    private function updateSignIn($sanitizedNewPassword) {
+        $query = "
+        UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
+        WHERE id = " . $this->dbChecker->userId . " LIMIT 1
+        ";
+
+        $this->dbChecker->executeQuery($query);
+
+        if ($this->dbChecker->lastQueryWasSuccessful()) {
+            return [
+                "statusCode" => 201
+            ];
+        } else if ($this->dbChecker->lastQueryAffectedNoRows()) {
+            return [
+                "statusCode" => 400,
+                "error" => [
+                    "message" => "That password is the same as the old password"
+                ]
+            ];
+        } else {
+            return [
+                "statusCode" => 500,
+                "error" => [
+                    "message" => "A system error occurred"
+                ]
+            ];
+        }
+    }
 
     public function deleteAccount()
     {
