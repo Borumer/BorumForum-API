@@ -26,10 +26,12 @@ class SettingsHandler {
         $oldPasswordIsCorrect = $comparePasswords[0] == $comparePasswords[1];
 
         if ($oldPasswordIsCorrect) {
-            $this->dbChecker->executeQuery("
+            $query = "
             UPDATE users SET pass = SHA2('$sanitizedNewPassword', 512) 
-            WHERE id = " . $this->userId . " LIMIT 1
-            ");
+            WHERE id = " . $this->dbChecker->userId . " LIMIT 1
+            ";
+
+            $this->dbChecker->executeQuery($query);
 
             if ($this->dbChecker->lastQueryWasSuccessful()) {
                 return [
@@ -64,5 +66,3 @@ class SettingsHandler {
         
     }
 }
-
-?>
