@@ -76,7 +76,7 @@ class SettingsHandler
 
         if ($this->dbChecker->lastQueryWasSuccessful()) {
             return [
-                "statusCode" => 201
+                "statusCode" => 204
             ];
         } else if ($this->dbChecker->lastQueryAffectedNoRows()) {
             return [
