@@ -639,7 +639,7 @@ class UserHandler extends UserNotKnownHandler
         $mailer = new PHPMailer();
 
         //Server settings
-        $mailer->SMTPDebug = 2;                      // Verbose debug output: 1 for no 2,3,4 for yes
+        $mailer->SMTPDebug = 3;                      // Verbose debug output: 1 for no 2,3,4 for yes
         $mailer->isSMTP();                                            // Send using SMTP
         $mailer->Port = 25;                                    // TCP port to connect to
         $mailer->Host = "localhost";
