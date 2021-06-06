@@ -657,11 +657,12 @@ class UserHandler extends UserNotKnownHandler
       // Server settings
       $mail->isSMTP();
       $mail->Host = $_ENV["SMTP_HOST"];    // Must be GoDaddy host name
-      $mail->SMTPAuth = true;
-      $mail->Username = 'support@borumtech.com';
-      $mail->Password = $_ENV["SUPPORT_EMAIL_PASSWORD"];
-      $mail->SMTPSecure = 'tls';   // ssl will no longer work on GoDaddy CPanel SMTP
-      $mail->Port = 587;    // Must use port 587 with TLS
+      $mail->SMTPAuth = false;
+      $mail->Username = $_ENV["GODADDY_USERNAME"];
+      $mail->Password = $_ENV["GODADDY_PASSWORD"];
+      $mail->SMTPAutoTLS = false;
+      // $mail->SMTPSecure = 'tls';   // ssl will no longer work on GoDaddy CPanel SMTP
+      $mail->Port = 25;    // Must use port 587 with TLS
 
       // Recipients
       $mail->setFrom('support@borumtech.com', 'Borum Support');

@@ -5,9 +5,18 @@ require __DIR__ . "/../vendor/autoload.php";
 use BorumForum\DBHandlers\SettingsHandler;
 use BorumForum\DBHandlers\UserHandler;
 use VarunS\PHPSleep\SimpleRest;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__, "/../.env");
+$dotenv->safeLoad();
 
 header('Access-Control-Allow-Methods: POST, PUT, DELETE, OPTIONS');
+
+if (!isset($_SERVER["HTTP_ORIGIN"]))
+    $_SERVER["HTTP_ORIGIN"] = "localhost";
+
 header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+
 header('Access-Control-Allow-Headers: content-type, authorization');
 
 switch ($_SERVER["REQUEST_METHOD"]) {
@@ -29,12 +38,17 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         echo json_encode($response);
     break;
     case "DELETE":
-        $delete = [];
-        parse_str(file_get_contents('php://input'), $delete);
+        // $delete = [];
+        // parse_str(file_get_contents('php://input'), $delete);
 
-        $userHandler = new UserHandler();
-        $response = $userHandler->sendResetPasswordEmail($delete["email"]);
-
+        // $userHandler = new UserHandler();
+        // $response = $userHandler->sendResetPasswordEmail($delete["email"]);
+        $response = [
+            "statusCode" => 302,
+            "error" => [
+                "message" => "Moved Temporarily. Use POST https://forum.borumtech.com/reset_password instead"
+            ]
+        ];
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
     case "OPTIONS":
