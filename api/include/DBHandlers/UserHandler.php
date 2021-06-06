@@ -102,8 +102,4 @@ class UserHandler extends UserNotKnownHandler {
             ];
         }
     }
-
-    private function sanitizeParam(string $param) : string {
-        return mysqli_real_escape_string($this->conn, trim($param));
-    }
 }
