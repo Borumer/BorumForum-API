@@ -13,14 +13,32 @@ class SettingsHandler
     }
 
     public function getActivatedApps() {
-        $jot = $this->dbChecker->executeQuery("SELECT borum_user_id FROM Jottings.users WHERE borum_user_id = " . $this->dbChecker->userId);
+        $jot = $this->getActivatedApp('Jottings');
+        $flytrap = $this->getActivatedApp('Flytrap');
         
         return [
             "statusCode" => 200,
             "data" => [
-                "jot" => mysqli_num_rows($jot) >= 1
+                [
+                    "name" => "Borum Jot",
+                    "activated" => $jot,
+                    "logoSrc" => "https://store.borumtech.com/jot.png",
+                    "webLink" => "https://jot.borumtech.com"
+                ],
+                [
+                    "name" => "Flytrap",
+                    "activated" => $flytrap,
+                    "logoSrc" => "https://store.borumtech.com/flytrap.png",
+                    "webLink" => "https://audio.borumtech.com"
+                ]
             ]
         ];
+    }
+
+    private function getActivatedApp(string $appTableName) {
+        $appQueryResult = $this->dbChecker->executeQuery("SELECT borum_user_id FROM $appTableName.users WHERE borum_user_id = " . $this->dbChecker->userId);
+
+        return mysqli_num_rows($appQueryResult) >= 1;
     }
 
     /**

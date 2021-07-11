@@ -5,8 +5,8 @@
       }
     },
     "routes": [
-      { "src": "/login", "dest": "/login.php" },
-      { "src": "/register", "dest": "/register.php" },
-      { "src": "/question", "dest": "/question.php" }
+      { "src": "/login", "dest": "/api/login.php" },
+      { "src": "/register", "dest": "/api/register.php" },
+      { "src": "/question", "dest": "/api/question.php" }
     ]
   }

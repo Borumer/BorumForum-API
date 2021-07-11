@@ -20,9 +20,9 @@ header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
 
 header('Access-Control-Allow-Headers: content-type, authorization');
 
-
 switch ($_SERVER["REQUEST_METHOD"]) {
     case "GET":
+        $headers = apache_request_headers();
         $userApiKey = SimpleRest::parseAuthorizationHeader($headers["authorization"]);
         $userHandler = new SettingsHandler($userApiKey);
         $response = $userHandler->getActivatedApps();
