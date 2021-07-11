@@ -12,6 +12,17 @@ class SettingsHandler
         $this->dbChecker = new UserKnownHandler($userApiKey);
     }
 
+    public function getActivatedApps() {
+        $jot = $this->dbChecker->executeQuery("SELECT borum_user_id FROM Jottings.users WHERE borum_user_id = " . $this->dbChecker->userId);
+        
+        return [
+            "statusCode" => 200,
+            "data" => [
+                "jot" => mysqli_num_rows($jot) >= 1
+            ]
+        ];
+    }
+
     /**
      * Updates a user's sign in
      * @param string $oldPassword The old password

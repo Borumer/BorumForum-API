@@ -4,6 +4,7 @@ require __DIR__ . "/../vendor/autoload.php";
 
 use BorumForum\DBHandlers\SettingsHandler;
 use BorumForum\DBHandlers\UserHandler;
+use BorumForum\DBHandlers\UserKnownHandler;
 use VarunS\PHPSleep\SimpleRest;
 use Dotenv\Dotenv;
 
@@ -19,9 +20,16 @@ header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
 
 header('Access-Control-Allow-Headers: content-type, authorization');
 
+
 switch ($_SERVER["REQUEST_METHOD"]) {
+    case "GET":
+        $userApiKey = SimpleRest::parseAuthorizationHeader($headers["authorization"]);
+        $userHandler = new SettingsHandler($userApiKey);
+        $response = $userHandler->getActivatedApps();
+        SimpleRest::setHttpHeaders($response["statusCode"]);
+        echo json_encode($response);
     case "POST":
-        $userHandler = new UserHandler($userApiKey);
+        $userHandler = new UserHandler();
         $response = $userHandler->getUser($_POST["email"], $_POST["password"]);
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
