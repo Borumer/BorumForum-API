@@ -28,6 +28,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $response = $userHandler->getActivatedApps();
         SimpleRest::setHttpHeaders($response["statusCode"]);
         echo json_encode($response);
+        break;
     case "POST":
         $userHandler = new UserHandler();
         $response = $userHandler->getUser($_POST["email"], $_POST["password"]);
